@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- '12'
+install: npm install
+branches:
+  only:
+  - master
+deploy:
+  provider: heroku
+  app: hack24-backend
+  api_key:
+    secure: wZdl5CDbf7DjJDD+Ie76PeZ7S2StuP0fLMhAzF2yqSbHybZHenfgutVwPldQ/cERiqGwQn/HM/KFGKro6LzPoGqD8N5QJzDuoMe+MC8eS0pnNqp3NPMB5Mp3SBe9PuBw8dcufb0wBNOjWsngJVxrSty77DkNvVUjR0IZGjsEZv54Bxx22NhTtgN5/VfLazuhb19elcIpBSW+xbSITghXDTO6MIVflHS271rEv1UlFuhcoDlD2znE+wMHgp5Q8SuBhnpGE1Mjd+DZrnV/0YvYjxoizdW1NnLUFLoTNTwazyW9LB6XHQSUoSYrZaVLgQjh8nlXDPpqL08nmiS/er3J2OUyvKLvnXfaEKsJPWmy1RuY/GDKEnMwhRhgQ6cTVzDp47xL9y3tQW5/rCK8zXlUMP/KbvP0RHsX+0dpL5+GdLB2OieNq5HNrFnQxQmPbvEFDRBtpkVq3M7ujiTovxtlfDbrGmmxRQ4tT6ApLxNl11Pd6CAoW8b4hM4Pjpc+kjHFmxdRAB2VTmaTSWRw1o4onXHfoA8fE3CzkJdddAhzJMs926jVjwN4HjX3y9OMQZTQy4K7UtXx49ldp9D4kNzKrNCfu8if+6RUO7Dh5lJnKfeB0ZzDO2JzYcuu4gkUidDNi2KH3Qxg6Cl1R+pLYwTar39ga36E0hzfw0vmHe/DPX0=
