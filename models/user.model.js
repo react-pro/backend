@@ -25,6 +25,14 @@ class UserModel {
             throw new ServerError(err.message);
         }
     }
+
+    async findById(id) {
+        try {
+            return User.findById(id).select('-password');
+        } catch (err) {
+            throw new ServerError(err.message);
+        }
+    }
 }
 
 module.exports = new UserModel();
