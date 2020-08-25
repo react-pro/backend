@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const quizData = require('../../utils/quiz.json');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send("Hello");
+
+router.get('/quiz', (req, res, next) => {
+  return res.send({quiz: JSON.stringify(quizData)});
 });
 
 module.exports = router;

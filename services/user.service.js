@@ -44,6 +44,12 @@ class UserService {
         delete userPasswordRemoved.password;
         return {token: jwtToken, user: userPasswordRemoved};
     }
+
+    async getUser(id) {
+        const user = await UserModel.findById(id);
+        if(!user) return null;
+        return user;
+    }
 }
 
 module.exports = new UserService();
