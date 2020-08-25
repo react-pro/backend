@@ -17,6 +17,14 @@ class UserModel {
             throw new ServerError(err.message);
         }
     }
+
+    async findByEmail(email) {
+        try {
+            return User.findOne({email});
+        } catch (err) {
+            throw new ServerError(err.message);
+        }
+    }
 }
 
 module.exports = new UserModel();

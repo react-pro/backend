@@ -1,6 +1,8 @@
 const UserModel = require('../models/user.model');
 const CryptographyService = require('./cryptography.service');
 const ServerError = require('../errors/ServerError');
+const jwt = require('jsonwebtoken');
+const secret = process.env.JWT_SECRET || require('config').JWT_SECRET;
 
 class UserService {
     async createUser(user) {
@@ -17,6 +19,30 @@ class UserService {
         }
 
         return await UserModel.createUser(user);
+    }
+
+    async login(userInfo) {
+        const {email, password} = userInfo;
+        const user = await UserModel.findByEmail(email);
+        if (!user) {
+            throw new Error('Wrong email');
+        }
+        const match = await CryptographyService.comparePasswords(
+            password,
+            user.password,
+        );
+        if (!match) {
+            throw new Error('Wrong password');
+        }
+        const payload = {
+            id: user._id,
+            email: user.email,
+            name: user.name
+        };
+        const jwtToken = jwt.sign(payload, secret);
+        const userPasswordRemoved = user.toObject();
+        delete userPasswordRemoved.password;
+        return {token: jwtToken, user: userPasswordRemoved};
     }
 }
 

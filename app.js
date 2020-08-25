@@ -15,6 +15,8 @@ mongoose.connect(MONGO_URI, {
 });
 console.log(mongoose.connection.readyState);
 
+const checkAuthorization = require('./routes/middleware/auth.middleware');
+
 const indexRouter = require('./routes/api');
 const authRouter = require('./routes/api/auth');
 const usersRouter = require('./routes/api/users');
@@ -27,7 +29,8 @@ app.use(express.urlencoded({extended: false}));
 
 app.use('/api/', indexRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
+
+app.use('/api/users', checkAuthorization, usersRouter);
 
 app.listen(PORT, function () {
     console.log('App is listening on port 3000!');
