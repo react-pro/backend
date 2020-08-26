@@ -59,8 +59,8 @@ class UserService {
         return await UserModel.addSkill(id, skill);
     }
 
-    async addArrayOfSkills(id, skills) {
-        return await UserModel.addSkillsArray(id, skills);
+    async updateUser(id, skills, direction) {
+        return await UserModel.updateUser(id, skills, direction);
     }
 }
 

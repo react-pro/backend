@@ -53,9 +53,9 @@ class UserModel {
         }
     }
 
-    async addSkillsArray(id, skills) {
+    async updateUser(id, skills, direction) {
         try {
-            const update = {$set: {skills: skills}}
+            const update = {$set: {skills: skills, preference: direction}}
             return await User.findOneAndUpdate({_id: id}, update);
         } catch (err) {
             throw new ServerError(err.message);

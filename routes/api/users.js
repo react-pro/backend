@@ -61,14 +61,15 @@ router.post('/:id/skillset', async(req, res) => {
   if(!id) {
     return res.status(404).json("No ID provided");
   }
-  const skills = req.body;
-
+  const array = req.body;
+  const skills = array.filter(item => item.hasOwnProperty('name'));
+  const preference = array.filter(item => item.hasOwnProperty('direction'));
   try {
-    const user = await UserService.addArrayOfSkills(id, skills);
+    const user = await UserService.updateUser(id, skills, preference[0].direction);
     if(!user) {
       return res.status(404).json("No such user");
     }
-    return res.status(200).json('Skills were added.');
+    return res.status(200).json('User was updated.');
   } catch (err) {
     if (err.name === 'ServerError') {
       return res.status(500).json({error: err.message});
