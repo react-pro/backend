@@ -58,6 +58,10 @@ class UserService {
     async addOneSkill(id, skill) {
         return await UserModel.addSkill(id, skill);
     }
+
+    async addArrayOfSkills(id, skills) {
+        return await UserModel.addSkillsArray(id, skills);
+    }
 }
 
 module.exports = new UserService();

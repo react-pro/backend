@@ -56,4 +56,26 @@ router.patch('/:id/skills', async(req, res) => {
   }
 })
 
+router.post('/:id/skillset', async(req, res) => {
+  const id = req.params.id;
+  if(!id) {
+    return res.status(404).json("No ID provided");
+  }
+  const skills = req.body;
+
+  try {
+    const user = await UserService.addArrayOfSkills(id, skills);
+    if(!user) {
+      return res.status(404).json("No such user");
+    }
+    return res.status(200).json('Skills were added.');
+  } catch (err) {
+    if (err.name === 'ServerError') {
+      return res.status(500).json({error: err.message});
+    }
+    return res.status(400).json({error: err.message});
+  }
+
+})
+
 module.exports = router;

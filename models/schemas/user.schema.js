@@ -23,7 +23,11 @@ const UserSchema = new Schema({
     skills: [{
         name: {type: String, required: true},
         level: {type: Number, required: true, default: 0}
-    }]
+    }],
+    preference: {
+        type: String,
+        enum: ["BE", "FE", "DESIGN"]
+    }
 });
 
 module.exports = mongoose.model('User', UserSchema);
