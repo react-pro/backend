@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const querystring = require('querystring');
 const UserModel = require('../../models/user.model');
 const pathToService = process.env.SKIllSET_URL || require('config').SKIllSET_URL;
 
@@ -13,10 +12,11 @@ router.get('/:id', async (req, res, next) => {
         return res.status(404).json("No id provided");
     }
     const user = await UserModel.findById(id);
+    const branch = user.preference || 'ALL';
 
     try {
-        const response = await axios.get(pathToService, querystring.stringify({branch: user.preference}));
-        return res.status(200).json(response);
+        const response = await axios.get(`${pathToService}/api/skill?branch=${branch}`);
+        return res.status(200).json(response.data);
     } catch (err) {
         return res.status(400).json(err);
     }

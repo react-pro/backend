@@ -26,7 +26,6 @@ const UserSchema = new Schema({
     }],
     preference: {
         type: String,
-        enum: ["BE", "FE", "DESIGN"]
     }
 });
 
