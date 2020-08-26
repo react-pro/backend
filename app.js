@@ -29,9 +29,9 @@ app.use(express.urlencoded({extended: false}));
 
 app.use('/api/', indexRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/roadmap', roadmapRouter);
+app.use('/api/roadmap', checkAuthorization, roadmapRouter);
 
-app.use('/api/users', usersRouter);
+app.use('/api/users', checkAuthorization, usersRouter);
 
 app.listen(PORT, function () {
     console.log('App is listening on port 8000!');
