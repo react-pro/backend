@@ -28,7 +28,7 @@ class UserModel {
 
     async findById(id) {
         try {
-            return User.findById(id).select('-password');
+            return await User.findById(id).select('-password');
         } catch (err) {
             throw new ServerError(err.message);
         }
@@ -36,8 +36,9 @@ class UserModel {
 
     async getSkillList(id, completed) {
         try {
-            const query = {skills: {level: { $gte: completed}}}
-            return User.findOne({_id: id, query}).select('skills');
+            const user = await User.findOne({_id: id}).select('skills');
+            const userObject = user.toObject();
+            return userObject.skills.filter(skill => skill.level >= completed);
         } catch (err) {
             throw new ServerError(err.message);
         }
@@ -48,7 +49,7 @@ class UserModel {
             console.log(name, level);
             const update = {$push: {skills: {name, level}}}
             console.log(update);
-            return User.findOneAndUpdate({_id: id}, update,{new: true});
+            return await User.findOneAndUpdate({_id: id}, update,{new: true});
         } catch (err) {
             throw new ServerError(err.message);
         }
