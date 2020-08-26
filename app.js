@@ -6,8 +6,7 @@ const config = require('config');
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 8000;
 
-const defaultMongoUri = 'mongodb://localhost:27017/hack24';
-const MONGO_URI = config.MONGOLAB_URI || defaultMongoUri;
+const MONGO_URI = process.env.MONGOLAB_URI || config.MONGOLAB_URI;
 
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
