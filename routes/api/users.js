@@ -19,4 +19,21 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.get('/:id/skills(:query)?', async(req, res) => {
+  const {completed} = req.query;
+  const id = req.params.id;
+  if(completed) {
+    try {
+      const skills = await UserService.getSkills(id, +completed);
+      return res.status(200).json(skills);
+    } catch (err) {
+      if (err.name === 'ServerError') {
+        return res.status(500).json({error: err.message});
+      }
+      return res.status(400).json({error: err.message});
+    }
+
+  }
+})
+
 module.exports = router;

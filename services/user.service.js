@@ -47,8 +47,12 @@ class UserService {
 
     async getUser(id) {
         const user = await UserModel.findById(id);
-        if(!user) return null;
+        if (!user) return null;
         return user;
+    }
+
+    async getSkills(id, completed) {
+        return await UserModel.getSkillList(id, completed);
     }
 }
 

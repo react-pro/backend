@@ -33,6 +33,15 @@ class UserModel {
             throw new ServerError(err.message);
         }
     }
+
+    async getSkillList(id, completed) {
+        try {
+            const query = {skills: {level: { $gte: completed}}}
+            return User.findOne({_id: id, query}).select('skills');
+        } catch (err) {
+            throw new ServerError(err.message);
+        }
+    }
 }
 
 module.exports = new UserModel();
