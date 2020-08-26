@@ -4,7 +4,7 @@ const cors = require('cors');
 const logger = require('morgan');
 const config = require('config');
 const mongoose = require('mongoose');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 const defaultMongoUri = 'mongodb://localhost:27017/hack24';
 const MONGO_URI = config.MONGOLAB_URI || defaultMongoUri;
@@ -33,5 +33,5 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', checkAuthorization, usersRouter);
 
 app.listen(PORT, function () {
-    console.log('App is listening on port 3000!');
+    console.log('App is listening on port 8000!');
 });
