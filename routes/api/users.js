@@ -19,4 +19,41 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.get('/:id/skills(:query)?', async(req, res) => {
+  const {completed} = req.query;
+  const id = req.params.id;
+
+    try {
+      if(completed) {
+        const skills = await UserService.getSkills(id, +completed);
+        return res.status(200).json(skills);
+      } else {
+        const skills = await UserService.getSkills(id, 0);
+        return res.status(200).json(skills);
+      }
+    } catch (err) {
+      if (err.name === 'ServerError') {
+        return res.status(500).json({error: err.message});
+      }
+      return res.status(400).json({error: err.message});
+    }
+})
+
+router.patch('/:id/skills', async(req, res) => {
+  const id = req.params.id;
+  const skill = {
+    name: req.body.name,
+    level: req.body.level
+  }
+  try {
+    await UserService.addOneSkill(id, skill);
+    return res.status(200).json('Skill was added.');
+  } catch (err) {
+    if (err.name === 'ServerError') {
+      return res.status(500).json({error: err.message});
+    }
+    return res.status(400).json({error: err.message});
+  }
+})
+
 module.exports = router;
