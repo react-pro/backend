@@ -46,10 +46,17 @@ class UserModel {
 
     async addSkill(id, {name, level}) {
         try {
-            console.log(name, level);
             const update = {$push: {skills: {name, level}}}
-            console.log(update);
             return await User.findOneAndUpdate({_id: id}, update,{new: true});
+        } catch (err) {
+            throw new ServerError(err.message);
+        }
+    }
+
+    async addSkillsArray(id, skills) {
+        try {
+            const update = {$set: {skills: skills}}
+            return await User.findOneAndUpdate({_id: id}, update);
         } catch (err) {
             throw new ServerError(err.message);
         }
