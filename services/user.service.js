@@ -54,6 +54,10 @@ class UserService {
     async getSkills(id, completed) {
         return await UserModel.getSkillList(id, completed);
     }
+
+    async addOneSkill(id, skill) {
+        return await UserModel.addSkill(id, skill);
+    }
 }
 
 module.exports = new UserService();

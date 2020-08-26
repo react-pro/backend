@@ -36,4 +36,21 @@ router.get('/:id/skills(:query)?', async(req, res) => {
   }
 })
 
+router.patch('/:id/skills', async(req, res) => {
+  const id = req.params.id;
+  const skill = {
+    name: req.body.name,
+    level: req.body.level
+  }
+  try {
+    await UserService.addOneSkill(id, skill);
+    return res.status(200).json('Skill was added.');
+  } catch (err) {
+    if (err.name === 'ServerError') {
+      return res.status(500).json({error: err.message});
+    }
+    return res.status(400).json({error: err.message});
+  }
+})
+
 module.exports = router;

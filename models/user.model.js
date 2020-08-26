@@ -42,6 +42,17 @@ class UserModel {
             throw new ServerError(err.message);
         }
     }
+
+    async addSkill(id, {name, level}) {
+        try {
+            console.log(name, level);
+            const update = {$push: {skills: {name, level}}}
+            console.log(update);
+            return User.findOneAndUpdate({_id: id}, update,{new: true});
+        } catch (err) {
+            throw new ServerError(err.message);
+        }
+    }
 }
 
 module.exports = new UserModel();
