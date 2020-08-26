@@ -3,6 +3,7 @@ const CryptographyService = require('./cryptography.service');
 const ServerError = require('../errors/ServerError');
 const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET || require('config').JWT_SECRET;
+const StorageS3 = require('../utils/awsStorage');
 
 class UserService {
     async createUser(user) {
@@ -57,6 +58,17 @@ class UserService {
 
     async addOneSkill(id, skill) {
         return await UserModel.addSkill(id, skill);
+    }
+
+    async updateAvatar(id, image) {
+        const user = await UserModel.findById(id);
+        if (!user) {
+            throw new Error('User not found!');
+        }
+        const imageData = await StorageS3.upload(image, id);
+        const imageLocation = imageData.Location;
+        await UserModel.updateAvatar(id, imageLocation);
+        return imageLocation;
     }
 
     async updateUser(id, skills, direction) {

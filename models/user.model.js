@@ -61,6 +61,14 @@ class UserModel {
             throw new ServerError(err.message);
         }
     }
+
+    async updateAvatar(id, imagePath) {
+        try {
+            await User.findByIdAndUpdate(id, {avatar: imagePath});
+        } catch (err) {
+            throw new ServerError(err.message);
+        }
+    }
 }
 
 module.exports = new UserModel();

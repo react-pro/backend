@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const UserService = require('../../services/user.service');
-
+const multer = require('multer');
+const upload = multer();
 
 router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
@@ -78,5 +79,17 @@ router.post('/:id/skillset', async(req, res) => {
   }
 
 })
+
+router.post('/users/:id/avatar', upload.single('image'), async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const image = req.file;
+    const imagePath = await UserService.updateAvatar(id, image);
+    return res.status(200).json({image: imagePath});
+  } catch (err) {
+    res.status(500).json({error: err.message});
+  }
+});
 
 module.exports = router;
