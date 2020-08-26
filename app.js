@@ -19,6 +19,7 @@ const checkAuthorization = require('./routes/middleware/auth.middleware');
 
 const indexRouter = require('./routes/api');
 const authRouter = require('./routes/api/auth');
+const roadmapRouter = require('./routes/api/roadmap');
 const usersRouter = require('./routes/api/users');
 
 
@@ -29,6 +30,7 @@ app.use(express.urlencoded({extended: false}));
 
 app.use('/api/', indexRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/roadmap', checkAuthorization, roadmapRouter);
 
 app.use('/api/users', checkAuthorization, usersRouter);
 
